@@ -52,7 +52,7 @@ email=wiener@normal-user.com
 * 当用户登录网站时，浏览器会把`cookie`自动的包含进来
 
 ## 如何发起CSRF攻击 && CSRF攻击的流程
-
+### 搭建CSRF攻击
 1. 使用`Burp Suite`把查看指定网页的请求报文，观察以下参数
    1. 是否是关于敏感信息的修改
    2. 是否包含cookie
@@ -60,3 +60,9 @@ email=wiener@normal-user.com
 2. 右键转发到`Repeater`，并选择`Engagement tools` -> `Generate CSRF PoC`
 3. 在右上角的`Options`中选择`include auto-submit script`
 4. 点击`Regenerate`，并点击`Test in browser`
+### How to deliver a CSRF exploit
+在这方面`CSRF`与`XSS`是一样的。一般来说攻击者将恶意的`HTML`放到恶意网站上，诱使受害者访问该网站；链接也可以
+如果是使用`GET`方法，就可以用`URL`的方式，比如下面，直接使用链接把参数换掉
+```html
+<img src="https://vulnerable-website.com/email/change?email=pwned@evil-user.net">
+```
